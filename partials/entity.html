@@ -69,6 +69,38 @@
       <br/>
       <accordion close-others="isOneAtATime">
         <accordion-group ng-repeat="entity in main.entities" heading="{{entity.heading}}" is-open="$first">
+          <div ng-show="entity.actions.length">
+            <h4>Actions</h4>
+            <accordion close-others="true">
+              <accordion-group ng-repeat="action in entity.actions" is-open="$first">
+                <accordion-heading>
+                  <span ng-show="action.title">{{action.title}}</span>
+                  <span ng-show="!action.title">{{action.name}}</span>
+                </accordion-heading>
+                <tabset>
+                  <tab heading="Form">
+                    <div ng-show="action.fields.length">
+                      <form class="form-horizontal">
+
+                        <br/>
+                        <srn-action value="action"></srn-action>
+                        <br/>
+
+                        <div class="control-group">
+                          <div class="controls">
+                            <button type="submit" class="btn btn-default" ng-click="execute(action)">Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </tab>
+                  <tab heading="Source">
+                    <pre>{{ action | prettify }}</pre>
+                  </tab>
+                </tabset>
+              </accordion-group>
+            </accordion>
+          </div>
           <div ng-show="entity.properties.length">
             <h4>Properties</h4>
             <pre>{{entity.properties}}</pre>
